@@ -1,5 +1,7 @@
 # Decaptcha / Bypass Captcha / Captcha Solver / Captcha Solutions
-A RESTful Captcha Solver or Bypass Captcha Service, check out http://www.captchasolutions.com solving at a rate of $0.0017 per image captcha solved.
+A RESTful Captcha Solver or Bypass Captcha Service
+Solving at a rate of $0.99 per 1000 captchas solved.
+Check out http://www.captchasolutions.com
 
 ----
 Usage
