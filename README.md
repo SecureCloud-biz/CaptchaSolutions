@@ -19,8 +19,11 @@ Usage
 	
 	$captchasolutions = new CaptchaSolutions($key, $secret);
 	
-	//print $captchasolutions->balance('sptest');
+	// scraping reCaptcha v1 
+	// $image = $captchasolutions->scrape_recaptcha($_html_source);
+		
 	print $captchasolutions->decode($image);	
+	//print $captchasolutions->balance('sptest');
 ```
 
 ----
@@ -29,3 +32,5 @@ Sponsors:
 - http://www.captchasolutions.com/
 - https://www.isnare.com/
 - https://articlefr.cf/
+- http://allwomencentral.com/
+- http://submito.us/

@@ -58,6 +58,17 @@ class CaptchaSolutions extends TinyHttpClient {
 		$ret = $this->getRemoteFile($this->host, $this->port, $remoteFile, $this->basicAuthUsernameColonPassword, $this->bufferSize, $this->mode, $this->fromEmail, $this->postData, $this->localFile);
 		return $ret;
 	}	
+	
+	public function scrape_recaptcha($_html) {
+		$content = preg_replace('/([\n])/sim', '', $_html);
+		$rcaptcha = preg_replace('#(.+?<iframe src=".+?recaptcha.+?k=(.+?)" height="300" width="500" frameborder="0"></iframe>.+)#si', '$2', $content);
+		$rcaptcha = "http://www.google.com/recaptcha/api/challenge?k=" . trim($rcaptcha);
+		$rdata = file_get_contents($rcaptcha);
+		$rcontent = preg_replace('/([\n])/sim', '', $rdata);
+		$captcha = preg_replace('#(.+?challenge : \'(.+?)\',.+)#si', '$2', $rcontent);
+		$captcha = 'http://www.google.com/recaptcha/api/image?c=' . $captcha;
+		return $captcha;
+	}
 
 }
 
