@@ -58,6 +58,14 @@ class CaptchaSolutions extends TinyHttpClient {
 		$ret = $this->getRemoteFile($this->host, $this->port, $remoteFile, $this->basicAuthUsernameColonPassword, $this->bufferSize, $this->mode, $this->fromEmail, $this->postData, $this->localFile);
 		return $ret;
 	}	
+
+	public function upload($catpcha) { 
+		$this->localFile = $catpcha;
+		$this->mode = 'POST';
+		$this->postData = 'p=upload&captcha=@' . $this->localFile . '&key=' . $this->token . '&secret=' . $this->secret;
+		$ret = $this->getRemoteFile($this->host, $this->port, $this->remoteFile, $this->basicAuthUsernameColonPassword, $this->bufferSize, $this->mode, $this->fromEmail, $this->postData, $this->localFile);
+		return $ret;
+	}	
 	
 	public function scrape_recaptcha($_html) {
 		$content = preg_replace('/([\n])/sim', '', $_html);
