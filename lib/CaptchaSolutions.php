@@ -59,6 +59,28 @@ class CaptchaSolutions extends TinyHttpClient {
 		return $ret;
 	}	
 
+	public function base64($catpcha) { 
+		$this->localFile = $catpcha;
+		$this->mode = 'POST';
+		$this->postData = 'p=base64&captcha=' . $this->localFile . '&key=' . $this->token . '&secret=' . $this->secret;
+		$ret = $this->getRemoteFile($this->host, $this->port, $this->remoteFile, $this->basicAuthUsernameColonPassword, $this->bufferSize, $this->mode, $this->fromEmail, $this->postData, $this->localFile);
+		return $ret;
+	}	
+	
+	public function audio($audiofile) { 
+		$this->localFile = $audiofile;
+		$this->mode = 'POST';
+		$this->postData = 'p=audio&audiofile=@' . $this->localFile . '&key=' . $this->token . '&secret=' . $this->secret;
+		$ret = $this->getRemoteFile($this->host, $this->port, $this->remoteFile, $this->basicAuthUsernameColonPassword, $this->bufferSize, $this->mode, $this->fromEmail, $this->postData, $this->localFile);
+		return $ret;
+	}	
+	
+	public function text($question) { 
+		$this->remoteFile = 'p=textcaptcha&question=' . $question . '&key=' . $this->token . '&secret=' . $this->secret;
+		$ret = $this->getRemoteFile($this->host, $this->port, $this->remoteFile, $this->basicAuthUsernameColonPassword, $this->bufferSize, $this->mode, $this->fromEmail, $this->postData, $this->localFile);
+		return $ret;
+	}	
+	
 	public function upload($catpcha) { 
 		$this->localFile = $catpcha;
 		$this->mode = 'POST';
