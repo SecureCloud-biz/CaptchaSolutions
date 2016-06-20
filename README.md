@@ -32,7 +32,6 @@ Usage
 Sponsors:
 
 - http://www.captchasolutions.com/
+- http://www.textcaptchadecoder.com/
+- https://www.freecontentarticles.com
 - https://www.isnare.com/
-- https://articlefr.cf/
-- http://allwomencentral.com/
-- http://submito.us/
