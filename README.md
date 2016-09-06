@@ -5,7 +5,7 @@ A RESTful Captcha Solver or Bypass Captcha Service
 
 <b>Solving at a rate of $0.7 per 1000 captchas solved.</b>
 
-Check out http://www.captchasolutions.com
+Check out https://www.captchasolutions.com
 
 ----
 Usage
@@ -31,7 +31,7 @@ Usage
 ----
 Sponsors:
 
-- http://www.captchasolutions.com/
+- https://www.captchaco.in/
 - http://www.textcaptchadecoder.com/
 - https://www.freecontentarticles.com
 - https://www.isnare.com/
