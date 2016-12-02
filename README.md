@@ -35,3 +35,4 @@ Sponsors:
 - http://www.textcaptchadecoder.com/
 - https://www.freecontentarticles.com
 - https://www.isnare.com/
+- http://www.solvecaptchas.com/
