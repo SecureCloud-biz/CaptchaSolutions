@@ -81,6 +81,12 @@ class CaptchaSolutions extends TinyHttpClient {
 		return $ret;
 	}	
 	
+	public function nocaptcha($google_site_key, $page_url) { 
+		$this->remoteFile = 'p=nocaptcha&googlekey=' . $google_site_key . '&pageurl=' . $page_url . '&key=' . $this->token . '&secret=' . $this->secret;
+		$ret = $this->getRemoteFile($this->host, $this->port, $this->remoteFile, $this->basicAuthUsernameColonPassword, $this->bufferSize, $this->mode, $this->fromEmail, $this->postData, $this->localFile);
+		return $ret;
+	}		
+	
 	public function upload($catpcha) { 
 		$this->localFile = $catpcha;
 		$this->mode = 'POST';

@@ -6,8 +6,17 @@
 	$key = "[<YOUR API KEY]"; // Get your own key at http://www.captchasolutions.com/clients/
 	$secret = "[<YOUR SECRET KEY]"; // Get your own key at http://www.captchasolutions.com/clients/
 	
-	$submitia = new CaptchaSolutions($key, $secret);
+	$api = new CaptchaSolutions($key, $secret);
 	
-	//print $submitia->balance('sptest');
-	print $submitia->decode($image);	
+	// Get available balance
+	print $api->balance('sptest');
+	
+	// Simple captcha image decode via URL
+	print $api->decode($image);	
+	
+	// Google's NoCaptcha
+	print $api->nocaptcha('6LcT6wATAAAAAMBYUbtdHChwcLt3kaoBpvICxdDj', 'https://www.isnare.com/login.php');
+	
+	//Text Captcha Decoding
+	print $api->text('What color is the sky?');	
 ?>
