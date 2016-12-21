@@ -1,4 +1,4 @@
-<img src="http://www.captchasolutions.com/img/captchasolutions.png">
+<a href="https://www.captchasolutions.com/"><img src="https://www.captchasolutions.com/img/captchasolutions.png"></a>
 
 # Bypass Captcha / Captcha Solver / Decaptcha
 A RESTful Captcha Solver or Bypass Captcha Service
@@ -16,8 +16,8 @@ Usage
 	
 	$image = 'http://www.captchacreator.com/files/captchac_code.php';
 	
-	$key = "[<YOUR API KEY]"; // Get your own key at http://www.captchasolutions.com/register/
-	$secret = "[<YOUR SECRET KEY]"; // Get your own key at http://www.captchasolutions.com/register/	
+	$key = "[<YOUR API KEY]"; // Get your own key at https://www.captchasolutions.com/register/
+	$secret = "[<YOUR SECRET KEY]"; // Get your own key at https://www.captchasolutions.com/register/	
 
 	$api = new CaptchaSolutions($key, $secret);
 	
@@ -37,7 +37,7 @@ Usage
 ----
 Sponsors:
 
-- http://www.captchasolutions.com/
+- https://www.captchasolutions.com/
 - https://www.isnare.com/
 - https://articlefr.cf/
 - http://allwomencentral.com/
