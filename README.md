@@ -39,6 +39,6 @@ Sponsors:
 
 - https://www.captchasolutions.com/
 - https://www.isnare.com/
-- https://articlefr.cf/
-- http://allwomencentral.com/
-- http://submito.us/
+- https://www.captchas.xyz/
+- https://www.freecontentarticles.com/
+- http://www.solvecaptchas.com/
