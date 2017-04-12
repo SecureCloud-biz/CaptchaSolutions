@@ -41,71 +41,197 @@ class CaptchaSolutions extends TinyHttpClient {
 	private $fromEmail = "admin@captchasolutions.com";
 	private $postData = "";
 	private $localFile = "";
+	private $proxy_host = "";
+	private $proxy_port = "";
+	private $is_proxy = 0;
 	
 	public function __construct($token, $secret) {
 		$this->token = $token;
 		$this->secret = $secret;
-	}
+	}	
 	
 	public function balance($username) { 
-		$remoteFile = $this->remoteFile . '?p=balance&username=' . $username . '&key=' . $this->token;
-		$ret = $this->getRemoteFile($this->host, $this->port, $remoteFile, $this->basicAuthUsernameColonPassword, $this->bufferSize, $this->mode, $this->fromEmail, $this->postData, $this->localFile);
-		return $ret;
+		$url = 'http://api.captchasolutions.com/solve?p=balance&username=' . $username . '&key=' . $this->token;
+
+		if ($this->is_proxy == 1) {
+			$ret = $this->_get_request($url, $this->proxy_host, $this->proxy_port);
+		} else {
+			$ret = $this->_get_request($url, null, null);
+		}			
+		
+		return $ret;		
 	}
 
 	public function decode($catpcha) { 
-		$remoteFile = $this->remoteFile . '?p=decode&url=' . urlencode($catpcha) . '&key=' . $this->token . '&secret=' . $this->secret;
-		$ret = $this->getRemoteFile($this->host, $this->port, $remoteFile, $this->basicAuthUsernameColonPassword, $this->bufferSize, $this->mode, $this->fromEmail, $this->postData, $this->localFile);
+		$url = 'http://api.captchasolutions.com/solve?p=decode&url=' . urlencode($catpcha) . '&key=' . $this->token . '&secret=' . $this->secret;
+
+		if ($this->is_proxy == 1) {
+			$ret = $this->_get_request($url, $this->proxy_host, $this->proxy_port);
+		} else {
+			$ret = $this->_get_request($url, null, null);
+		}			
+		
 		return $ret;
 	}	
 
 	public function base64($catpcha) { 
 		$this->localFile = $catpcha;
-		$this->mode = 'POST';
-		$this->postData = 'p=base64&captcha=' . $this->localFile . '&key=' . $this->token . '&secret=' . $this->secret;
-		$ret = $this->getRemoteFile($this->host, $this->port, $this->remoteFile, $this->basicAuthUsernameColonPassword, $this->bufferSize, $this->mode, $this->fromEmail, $this->postData, $this->localFile);
+
+		if ($this->is_proxy == 1) {
+			$ret = $this->_post_captcha('base64', $this->token, $this->secret, $this->localFile, 'xml', $this->proxy_host, $this->proxy_port);
+		} else {
+			$ret = $this->_post_captcha('base64', $this->token, $this->secret, $this->localFile, 'xml', null, null);
+		}
+		
 		return $ret;
 	}	
 	
 	public function audio($audiofile) { 
 		$this->localFile = $audiofile;
-		$this->mode = 'POST';
-		$this->postData = 'p=audio&audiofile=@' . $this->localFile . '&key=' . $this->token . '&secret=' . $this->secret;
-		$ret = $this->getRemoteFile($this->host, $this->port, $this->remoteFile, $this->basicAuthUsernameColonPassword, $this->bufferSize, $this->mode, $this->fromEmail, $this->postData, $this->localFile);
-		return $ret;
+
+		if ($this->is_proxy == 1) {
+			$ret = $this->_post_audio('audio', $this->token, $this->secret, $this->localFile, 'xml', $this->proxy_host, $this->proxy_port);
+		} else {
+			$ret = $this->_post_audio('audio', $this->token, $this->secret, $this->localFile, 'xml', null, null);
+		}
+		
+		return $ret;		
 	}	
 	
 	public function text($question) { 
-		$this->remoteFile = 'p=textcaptcha&question=' . $question . '&key=' . $this->token . '&secret=' . $this->secret;
-		$ret = $this->getRemoteFile($this->host, $this->port, $this->remoteFile, $this->basicAuthUsernameColonPassword, $this->bufferSize, $this->mode, $this->fromEmail, $this->postData, $this->localFile);
+		$url = 'http://api.captchasolutions.com/solve?p=textcaptcha&question=' . $question . '&key=' . $this->token . '&secret=' . $this->secret;
+
+		if ($this->is_proxy == 1) {
+			$ret = $this->_get_request($url, $this->proxy_host, $this->proxy_port);
+		} else {
+			$ret = $this->_get_request($url, null, null);
+		}
+		
 		return $ret;
 	}	
 	
 	public function nocaptcha($google_site_key, $page_url) { 
-		$this->remoteFile = 'p=nocaptcha&googlekey=' . $google_site_key . '&pageurl=' . $page_url . '&key=' . $this->token . '&secret=' . $this->secret;
-		$ret = $this->getRemoteFile($this->host, $this->port, $this->remoteFile, $this->basicAuthUsernameColonPassword, $this->bufferSize, $this->mode, $this->fromEmail, $this->postData, $this->localFile);
+		$url = 'http://api.captchasolutions.com/solve?p=nocaptcha&googlekey=' . $google_site_key . '&pageurl=' . $page_url . '&key=' . $this->token . '&secret=' . $this->secret;
+
+		if ($this->is_proxy == 1) {
+			$ret = $this->_get_request($url, $this->proxy_host, $this->proxy_port);
+		} else {
+			$ret = $this->_get_request($url, null, null);
+		}		
+		
 		return $ret;
 	}		
 	
-	public function upload($catpcha) { 
+	public function upload($catpcha) {
 		$this->localFile = $catpcha;
-		$this->mode = 'POST';
-		$this->postData = 'p=upload&captcha=@' . $this->localFile . '&key=' . $this->token . '&secret=' . $this->secret;
-		$ret = $this->getRemoteFile($this->host, $this->port, $this->remoteFile, $this->basicAuthUsernameColonPassword, $this->bufferSize, $this->mode, $this->fromEmail, $this->postData, $this->localFile);
+		
+		if ($this->is_proxy == 1) {
+			$ret = $this->_post_captcha('upload', $this->token, $this->secret, $this->localFile, 'xml', $this->proxy_host, $this->proxy_port);
+		} else {
+			$ret = $this->_post_captcha('upload', $this->token, $this->secret, $this->localFile, 'xml', null, null);
+		}
+		
 		return $ret;
-	}	
-	
-	public function scrape_recaptcha($_html) {
-		$content = preg_replace('/([\n])/sim', '', $_html);
-		$rcaptcha = preg_replace('#(.+?<iframe src=".+?recaptcha.+?k=(.+?)" height="300" width="500" frameborder="0"></iframe>.+)#si', '$2', $content);
-		$rcaptcha = "http://www.google.com/recaptcha/api/challenge?k=" . trim($rcaptcha);
-		$rdata = file_get_contents($rcaptcha);
-		$rcontent = preg_replace('/([\n])/sim', '', $rdata);
-		$captcha = preg_replace('#(.+?challenge : \'(.+?)\',.+)#si', '$2', $rcontent);
-		$captcha = 'http://www.google.com/recaptcha/api/image?c=' . $captcha;
-		return $captcha;
-	}
+	}			
 
+	public function set_proxy($host, $port) {
+		$this->proxy_host = $host;
+		$this->proxy_port = $port;
+		$this->is_proxy = 1;
+	}
+	
+	private function _post_audio($p, $key, $secret, $audiofile, $out, $proxy_host = null, $proxy_port = null) {
+		$post = array(
+			'p' => $p,
+			'key' => $key,
+			'secret' => $secret,
+			'audiofile' => '@'.realpath($captcha),
+			'out' => $out
+		);		
+		
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, 'http://api.captchasolutions.com/solve');
+		curl_setopt($ch, CURLOPT_HEADER, FALSE);					
+		curl_setopt($ch, CURLOPT_AUTOREFERER, TRUE);	
+		curl_setopt($ch, CURLOPT_USERAGENT,  "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1a2pre) Gecko/2008073000 Shredder/3.0a2pre ThunderBrowse/3.2.1.8");
+		curl_setopt($ch, CURLOPT_POST, TRUE);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: multipart/form-data;"));
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, FALSE);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+		curl_setopt($ch, CURLOPT_TCP_NODELAY, TRUE);
+		
+		if ($proxy_host != null && $proxy_port != null) {			
+			$proxy = $proxy_host . ":" . $proxy_port;
+			curl_setopt($ch, CURLOPT_PROXY, $proxy);
+		}				
+		
+		$response = curl_exec($ch);
+		curl_close($ch);
+		
+		print $response;		
+	}
+	
+	private function _post_captcha($p, $key, $secret, $captcha, $out, $proxy_host = null, $proxy_port = null) {
+		$post = array(
+			'p' => $p,
+			'key' => $key,
+			'secret' => $secret,
+			'captcha' => '@'.realpath($captcha),
+			'out' => $out
+		);		
+		
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, 'http://api.captchasolutions.com/solve');
+		curl_setopt($ch, CURLOPT_HEADER, FALSE);					
+		curl_setopt($ch, CURLOPT_AUTOREFERER, TRUE);	
+		curl_setopt($ch, CURLOPT_USERAGENT,  "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1a2pre) Gecko/2008073000 Shredder/3.0a2pre ThunderBrowse/3.2.1.8");
+		curl_setopt($ch, CURLOPT_POST, TRUE);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: multipart/form-data;"));
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, FALSE);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+		curl_setopt($ch, CURLOPT_TCP_NODELAY, TRUE);
+		
+		if ($proxy_host != null && $proxy_port != null) {			
+			$proxy = $proxy_host . ":" . $proxy_port;
+			curl_setopt($ch, CURLOPT_PROXY, $proxy);
+		}				
+		
+		$response = curl_exec($ch);
+		curl_close($ch);
+		
+		print $response;		
+	}
+	
+	private function _get_request($url, $proxy_host = null, $proxy_port = null) {			
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_HEADER, FALSE);					
+		curl_setopt($ch, CURLOPT_AUTOREFERER, TRUE);	
+		curl_setopt($ch, CURLOPT_USERAGENT,  "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1a2pre) Gecko/2008073000 Shredder/3.0a2pre ThunderBrowse/3.2.1.8");
+		curl_setopt($ch, CURLOPT_POST, FALSE);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: multipart/form-data;"));
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, FALSE);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+		curl_setopt($ch, CURLOPT_TCP_NODELAY, TRUE);
+		
+		if ($proxy_host != null && $proxy_port != null) {			
+			$proxy = $proxy_host . ":" . $proxy_port;
+			curl_setopt($ch, CURLOPT_PROXY, $proxy);
+		}				
+		
+		$response = curl_exec($ch);
+		curl_close($ch);
+		
+		print $response;		
+	}	
 }
 
 ?>
