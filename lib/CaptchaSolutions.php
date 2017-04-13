@@ -171,7 +171,7 @@ class CaptchaSolutions extends TinyHttpClient {
 		$response = curl_exec($ch);
 		curl_close($ch);
 		
-		print $response;		
+		return $response;		
 	}
 	
 	private function _post_captcha($p, $key, $secret, $captcha, $out, $proxy_host = null, $proxy_port = null) {
@@ -205,7 +205,7 @@ class CaptchaSolutions extends TinyHttpClient {
 		$response = curl_exec($ch);
 		curl_close($ch);
 		
-		print $response;		
+		return $response;		
 	}
 	
 	private function _get_request($url, $proxy_host = null, $proxy_port = null) {			
@@ -230,7 +230,7 @@ class CaptchaSolutions extends TinyHttpClient {
 		$response = curl_exec($ch);
 		curl_close($ch);
 		
-		print $response;		
+		return $response;		
 	}	
 }
 
