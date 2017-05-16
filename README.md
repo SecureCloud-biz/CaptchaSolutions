@@ -40,5 +40,5 @@ Sponsors:
 - https://www.captchasolutions.com/
 - https://www.isnare.com/
 - https://www.captchas.xyz/
-- https://www.freecontentarticles.com/
-- http://www.solvecaptchas.com/
+- http://www.freecontentarticles.com/
+- https://www.solvecaptchas.com/
