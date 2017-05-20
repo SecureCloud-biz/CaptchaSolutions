@@ -48,6 +48,19 @@ class CaptchaSolutions {
 		$this->secret = $secret;
 	}	
 	
+	private function getCurlValue($filename, $contentType = NULL, $postname = NULL) {
+		if (function_exists('curl_file_create')) {
+			return curl_file_create($filename, $contentType, $postname);
+		}
+	 
+		$value = "@{$filename};filename=" . $postname;
+		if ($contentType) {
+			$value .= ';type=' . $contentType;
+		}
+	 
+		return $value;
+	}	
+	
 	public function balance($username) { 
 		$url = 'http://api.captchasolutions.com/solve?p=balance&username=' . $username . '&key=' . $this->token;
 
@@ -120,13 +133,11 @@ class CaptchaSolutions {
 		return $ret;
 	}		
 	
-	public function upload($catpcha) {
-		$this->localFile = $catpcha;
-		
+	public function upload($catpcha) {		
 		if ($this->is_proxy == 1) {
-			$ret = $this->_post_captcha('upload', $this->token, $this->secret, $this->localFile, 'xml', $this->proxy_host, $this->proxy_port);
+			$ret = $this->_post_captcha('upload', $this->token, $this->secret, $catpcha, 'text', $this->proxy_host, $this->proxy_port);
 		} else {
-			$ret = $this->_post_captcha('upload', $this->token, $this->secret, $this->localFile, 'xml', null, null);
+			$ret = $this->_post_captcha('upload', $this->token, $this->secret, $catpcha, 'text');
 		}
 		
 		return $ret;
@@ -143,7 +154,7 @@ class CaptchaSolutions {
 			'p' => 'audio',
 			'key' => $key,
 			'secret' => $secret,
-			'audiofile' => '@'.$audiofile,
+			'audiofile' => $this->getCurlValue($audiofile),
 			'out' => $out
 		);		
 		
@@ -152,11 +163,11 @@ class CaptchaSolutions {
 		curl_setopt($ch, CURLOPT_HEADER, FALSE);					
 		curl_setopt($ch, CURLOPT_AUTOREFERER, TRUE);	
 		curl_setopt($ch, CURLOPT_USERAGENT,  "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1a2pre) Gecko/2008073000 Shredder/3.0a2pre ThunderBrowse/3.2.1.8");
-		curl_setopt($ch, CURLOPT_POST, TRUE);
+		curl_setopt($ch, CURLOPT_POST, 1);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: multipart/form-data;"));
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, FALSE);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
 		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60);
 		curl_setopt($ch, CURLOPT_TIMEOUT, 60);
 		curl_setopt($ch, CURLOPT_TCP_NODELAY, TRUE);
@@ -177,7 +188,7 @@ class CaptchaSolutions {
 			'p' => $p,
 			'key' => $key,
 			'secret' => $secret,
-			'captcha' => '@'.realpath($captcha),
+			'captcha' => $this->getCurlValue($captcha),
 			'out' => $out
 		);		
 		
@@ -186,11 +197,12 @@ class CaptchaSolutions {
 		curl_setopt($ch, CURLOPT_HEADER, FALSE);					
 		curl_setopt($ch, CURLOPT_AUTOREFERER, TRUE);	
 		curl_setopt($ch, CURLOPT_USERAGENT,  "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1a2pre) Gecko/2008073000 Shredder/3.0a2pre ThunderBrowse/3.2.1.8");
-		curl_setopt($ch, CURLOPT_POST, TRUE);
+		curl_setopt($ch, CURLOPT_POST, 1);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: multipart/form-data;"));
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+		curl_setopt($ch, CURLOPT_SAFE_UPLOAD, TRUE);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, FALSE);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
 		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60);
 		curl_setopt($ch, CURLOPT_TIMEOUT, 60);
 		curl_setopt($ch, CURLOPT_TCP_NODELAY, TRUE);
