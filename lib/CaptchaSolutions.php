@@ -122,7 +122,7 @@ class CaptchaSolutions {
 	}	
 	
 	public function nocaptcha($google_site_key, $page_url, $out = 'xml') { 
-		$url = 'http://api.captchasolutions.com/solve?p=nocaptcha&googlekey=' . urlencode($google_site_key) . '&pageurl=' . urlencode($page_url) . '&key=' . $this->token . '&secret=' . $this->secret . '&out=' . $out;
+		$url = 'http://api.captchasolutions.com/solve?p=nocaptcha&googlekey=' . $google_site_key . '&pageurl=' . urlencode($page_url) . '&key=' . $this->token . '&secret=' . $this->secret . '&out=' . $out;
 
 		if ($this->is_proxy == 1) {
 			$ret = $this->_get_request($url, $this->proxy_host, $this->proxy_port);
@@ -225,9 +225,8 @@ class CaptchaSolutions {
 		curl_setopt($ch, CURLOPT_AUTOREFERER, TRUE);	
 		curl_setopt($ch, CURLOPT_USERAGENT,  "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1a2pre) Gecko/2008073000 Shredder/3.0a2pre ThunderBrowse/3.2.1.8");
 		curl_setopt($ch, CURLOPT_POST, FALSE);
-		curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: multipart/form-data;"));
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, FALSE);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
 		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60);
 		curl_setopt($ch, CURLOPT_TIMEOUT, 60);
 		curl_setopt($ch, CURLOPT_TCP_NODELAY, TRUE);
