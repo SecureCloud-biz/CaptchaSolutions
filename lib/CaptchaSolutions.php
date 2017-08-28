@@ -85,13 +85,13 @@ class CaptchaSolutions {
 		return $ret;
 	}	
 
-	public function base64($catpcha) { 
+	public function base64($catpcha, $out = 'xml') { 
 		$this->localFile = $catpcha;
 
 		if ($this->is_proxy == 1) {
-			$ret = $this->_post_captcha('base64', $this->token, $this->secret, $this->localFile, 'xml', $this->proxy_host, $this->proxy_port);
+			$ret = $this->_post_captcha('base64', $this->token, $this->secret, $this->localFile, $out, $this->proxy_host, $this->proxy_port);
 		} else {
-			$ret = $this->_post_captcha('base64', $this->token, $this->secret, $this->localFile, 'xml', null, null);
+			$ret = $this->_post_captcha('base64', $this->token, $this->secret, $this->localFile, $out, null, null);
 		}
 		
 		return $ret;
@@ -133,11 +133,11 @@ class CaptchaSolutions {
 		return $ret;
 	}		
 	
-	public function upload($catpcha) {		
+	public function upload($catpcha, $out = 'xml') {		
 		if ($this->is_proxy == 1) {
-			$ret = $this->_post_captcha('upload', $this->token, $this->secret, $catpcha, 'text', $this->proxy_host, $this->proxy_port);
+			$ret = $this->_post_captcha('upload', $this->token, $this->secret, $catpcha, $out, $this->proxy_host, $this->proxy_port);
 		} else {
-			$ret = $this->_post_captcha('upload', $this->token, $this->secret, $catpcha, 'text');
+			$ret = $this->_post_captcha('upload', $this->token, $this->secret, $catpcha, $out);
 		}
 		
 		return $ret;
