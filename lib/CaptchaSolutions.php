@@ -184,11 +184,15 @@ class CaptchaSolutions {
 	}
 	
 	private function _post_captcha($p, $key, $secret, $captcha, $out, $proxy_host = null, $proxy_port = null) {
+		if ($p != 'base64') {
+			$captcha = $this->getCurlValue($captcha);
+		}
+		
 		$post = array(
 			'p' => $p,
 			'key' => $key,
 			'secret' => $secret,
-			'captcha' => $this->getCurlValue($captcha),
+			'captcha' => $captcha,
 			'out' => $out
 		);		
 		
