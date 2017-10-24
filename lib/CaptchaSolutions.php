@@ -207,8 +207,8 @@ class CaptchaSolutions {
 		curl_setopt($ch, CURLOPT_SAFE_UPLOAD, TRUE);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
-		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60);
-		curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1800);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 1800);
 		curl_setopt($ch, CURLOPT_TCP_NODELAY, TRUE);
 		
 		if ($proxy_host != null && $proxy_port != null) {			
@@ -231,8 +231,8 @@ class CaptchaSolutions {
 		curl_setopt($ch, CURLOPT_POST, FALSE);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
-		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60);
-		curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1800);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 1800);
 		curl_setopt($ch, CURLOPT_TCP_NODELAY, TRUE);
 		
 		if ($proxy_host != null && $proxy_port != null) {			
