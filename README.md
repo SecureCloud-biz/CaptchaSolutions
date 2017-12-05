@@ -30,6 +30,9 @@ Usage
 	// Google's NoCaptcha
 	print $api->nocaptcha('6LcT6wATAAAAAMBYUbtdHChwcLt3kaoBpvICxdDj', 'https://www.isnare.com/login.php');	
 	
+	// FunCaptcha
+	print $api->funcaptcha('DE0B0BB7-1EE4-4D70-1853-31B835D4506B', 'https://www.funcaptcha.com/demo/');
+	
 	//Text Captcha Decoding
 	print $api->text('What color is the sky?');		
 ```
