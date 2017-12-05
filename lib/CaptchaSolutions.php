@@ -133,6 +133,18 @@ class CaptchaSolutions {
 		return $ret;
 	}		
 	
+	public function funcaptcha($site_key, $page_url, $out = 'xml') { 
+		$url = 'http://api.captchasolutions.com/solve?p=funcaptcha&publickey=' . $site_key . '&siteurl=' . urlencode($page_url) . '&key=' . $this->token . '&secret=' . $this->secret . '&out=' . $out;
+
+		if ($this->is_proxy == 1) {
+			$ret = $this->_get_request($url, $this->proxy_host, $this->proxy_port);
+		} else {
+			$ret = $this->_get_request($url, null, null);
+		}		
+		
+		return $ret;
+	}
+	
 	public function upload($catpcha, $out = 'xml') {		
 		if ($this->is_proxy == 1) {
 			$ret = $this->_post_captcha('upload', $this->token, $this->secret, $catpcha, $out, $this->proxy_host, $this->proxy_port);
